@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+
+<!-- Production Project -->
+
+<!DOCTYPE project [
+<!ENTITY relsim "v04_36_00_01">
+<!ENTITY relreco1 "v04_36_00_01">
+<!ENTITY relreco2 "v04_36_00_01">
+<!ENTITY file_type "mc">
+<!ENTITY run_type "physics">
+<!ENTITY name "MuCSMerged_DataMatched_Muons_Run3702_158">
+<!ENTITY tag "MuCS">
+]>
+
+<job>
+
+<project name="&name;">
+
+  <!-- Project size -->
+  <numevents>17200</numevents>
+
+  <!-- Operating System -->
+  <os>SL6</os>
+  
+  <!-- Larsoft information -->
+  <larsoft>
+    <tag>&relsim;</tag>
+    <qual>e9:prof</qual>
+  </larsoft>
+
+  <!-- Project stages -->
+
+  <stage name="TextGen">
+    <inputmode>textfile</inputmode>
+    <fcl>prodtext_MuCSMerged.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/gen/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/gen/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/&tag;/work/&relsim;/gen/&name;</workdir>
+    <output>&name;_${PROCESS}_%tc_gen.root</output>
+    <inputlist>/uboone/app/users/mibass/ubdev_mucs2/test/mergetests/outtest/TFGoutputs/inputlist.txt</inputlist>
+    <numjobs>400</numjobs>
+    <datatier>generated</datatier>
+    <defname>&name;_&tag;_gen</defname>
+    <resource>OPPORTUNISTIC</resource>
+  </stage>
+
+  <stage name="g4">
+    <fcl>standard_g4_uboone.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/g4/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/g4/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/&tag;/work/&relsim;/g4/&name;/</workdir>
+    <datatier>simulated</datatier>i
+    <!--memory>6144</memory-->
+    <defname>&name;_&tag;_g4</defname>
+    <resource>OPPORTUNISTIC</resource>
+    <maxfilesperjob>1</maxfilesperjob>
+  </stage>
+
+  <stage name="detsim">
+    <fcl>standard_detsim_uboone.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/detsim/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/detsim/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/&tag;/work/&relsim;/detsim/&name;</workdir>
+    <!--memory>6144</memory-->
+    <datatier>detector-simulated</datatier>
+    <defname>&name;_&tag;_detsim</defname>
+    <resource>OPPORTUNISTIC</resource>
+    <maxfilesperjob>1</maxfilesperjob>
+  </stage>
+
+  <stage name="reco1">
+    <fcl>reco_uboone_mcc7_driver_stage1.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco1;/reco1/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco1;/reco1/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/&tag;/work/&relreco1;/reco1/&name;</workdir>
+    <datatier>reconstructed-2d</datatier>
+    <defname>&name;_&tag;_reco1</defname>
+    <!--memory>6144</memory-->
+    <resource>OPPORTUNISTIC</resource>
+     <maxfilesperjob>1</maxfilesperjob>
+  </stage>
+
+  <!--stage name="reco2">
+    <fcl>reco_uboone_mcc7_driver_stage2.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco2;/reco2/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco2;/reco2/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/&tag;/work/&relreco2;/reco2/&name;</workdir>
+    <datatier>reconstructed</datatier>
+    <defname>&name;_&tag;_reco2</defname>
+    <resource>OPPORTUNISTIC</resource>
+    <maxfilesperjob>1</maxfilesperjob>
+  </stage-->
+
+  <stage name="TagAna">
+    <fcl>mucstagmc_r0.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco2;/mergeana/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco2;/mergeana/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/&tag;/work/&relreco2;/mergeana/&name;</workdir>
+    <datatier>reconstructed</datatier>
+    <anadatatier>root-tuple</anadatatier>
+    <defname>&name;_&tag;</defname>
+    <anadefname>&name;_&tag;_ana</anadefname>
+    <resource>OPPORTUNISTIC</resource>
+  </stage>
+    
+  <!-- file type -->
+  <filetype>&file_type;</filetype>
+
+  <!-- run type -->
+  <runtype>&run_type;</runtype>
+
+</project>
+
+
+
+</job>

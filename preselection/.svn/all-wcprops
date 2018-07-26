@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/MicroBooNE/!svn/ver/112/trunk/mega_micro_code
+END
+mega_micro_script.sh
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/MicroBooNE/!svn/ver/91/trunk/mega_micro_code/mega_micro_script.sh
+END
+mega_micro_code.cc
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/MicroBooNE/!svn/ver/120/trunk/mega_micro_code/mega_micro_code.cc
+END
+lartf_logfile.txt
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/MicroBooNE/!svn/ver/122/trunk/mega_micro_code/lartf_logfile.txt
+END
+data_logfile.txt
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/MicroBooNE/!svn/ver/106/trunk/mega_micro_code/data_logfile.txt
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/MicroBooNE/!svn/ver/120/trunk/mega_micro_code/makefile
+END

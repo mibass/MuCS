@@ -1,0 +1,9 @@
+BEGIN_PROLOG
+
+microboone_MCSMuons:
+{ 
+ module_type:              "MCSMuons"
+ levels:         [403.15, 402.15, 352.15, 351.15]
+}
+
+END_PROLOG

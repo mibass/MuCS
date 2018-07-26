@@ -1,0 +1,14 @@
+
+#!/bin/bash
+
+# source /grid/fermiapp/products/uboone/setup_uboone.sh
+
+source /afs/fnal.gov/files/home/room3/kalousis/.profile
+
+source /uboone/app/users/kalousis/setup_larsoft_merger.sh
+
+cd  /uboone/app/users/kalousis/MuCS/preselection/
+
+rm -rf /uboone/data/users/kalousis/MuCS/muons_a/log-158.txt
+./mega_micro_code 140 0.3333 0 >> /uboone/data/users/kalousis/MuCS/muons_a/log-158.txt
+

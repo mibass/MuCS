@@ -1,0 +1,4 @@
+#include "MuCSRecoToMC.fcl"
+
+physics.producers.generator.MuonKE: 4
+

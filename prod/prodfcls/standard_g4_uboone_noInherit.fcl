@@ -1,0 +1,5 @@
+#include "standard_g4_uboone.fcl"
+
+#services.user.DetectorClocksService.InheritClockConfig: false
+services.user.TimeService.InheritClockConfig: false
+outputs.out1.fileName: "%ifb_g4.root"

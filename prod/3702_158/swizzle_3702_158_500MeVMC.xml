@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+
+<!-- Production Project -->
+
+<!DOCTYPE project [
+<!ENTITY relswiz "v04_26_04_09">
+<!ENTITY relreco "v05_08_00">
+<!ENTITY relmctoreco "v05_09_01">
+<!ENTITY relsim "v04_36_00_03">
+<!ENTITY file_type "mc">
+<!ENTITY run_type "physics">
+<!ENTITY name "MuCSRun3702_Group158">
+<!ENTITY tag "MuCS">
+<!ENTITY group "158">
+<!ENTITY numjobs "349">
+<!ENTITY fcldir "/uboone/app/users/mibass/cosmics/MuCS/prod/prodfcls/">
+<!ENTITY resourcem "DEDICATED,OPPORTUNISTIC">
+]>
+
+<job>
+
+<project name="swizzle">
+  <fcldir>&fcldir;</fcldir>
+  <!-- Project size -->
+  <numevents>100000</numevents>
+
+  <!-- Operating System -->
+  <!--os>SL6</os-->
+  <!-- Batch resources -->
+  <resource>&resourcem;</resource>
+  
+  <!-- Larsoft information  -->
+  <larsoft>
+    <tag>&relswiz;</tag>
+    <qual>e7:prof</qual>
+  </larsoft>
+  
+  <!-- Project stages -->
+  <stage name="swizzle">
+    <fcl>swizzle_with_three_filters.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relswiz;/swizzle/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relswiz;/swizzle/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relswiz;/swizzle/&name;</workdir>
+    <!--output>swizzle_${PROCESS}_%tc.root</output-->
+    <inputdef>mibass_&name;_ubdaq</inputdef>
+    <numjobs>&numjobs;</numjobs>
+    <maxfilesperjob>1</maxfilesperjob>
+  </stage>
+
+</project>
+
+
+<project name="process">
+  <fcldir>&fcldir;</fcldir>
+  <!-- Project size -->
+  <numevents>100000</numevents>
+
+  <!-- Operating System -->
+  <!--os>SL6</os-->
+  <!-- Batch resources -->
+  <resource>&resourcem;</resource>
+  
+  <!-- Larsoft information  -->
+  <larsoft>
+    <tag>&relreco;</tag>
+    <qual>e9:prof</qual>
+    <!--local>/uboone/app/users/mibass/ubdev_mucs2/lps_larlite.tar</local-->
+  </larsoft>
+  
+  <numjobs>&numjobs;</numjobs>
+  <maxfilesperjob>1</maxfilesperjob>  
+  `
+  <!-- Project stages -->
+  <stage name="reco1">
+    <fcl>reco_uboone_data_Feb2016_driver_stage1_SatCorr_epoch3.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/reco1/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/reco1/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/reco1/&name;</workdir>
+  </stage>
+
+  <stage name="reco2">
+    <fcl>reco_uboone_data_Feb2016_driver_stage2_SatCorr_epoch3.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/reco2/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/reco2/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/reco2/&name;</workdir>
+  </stage>
+  
+  <stage name="MuCSDT">
+    <fcl>MuCSDT_&group;.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/MuCSDT/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/MuCSDT/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/MuCSDT/&name;</workdir>
+  </stage>
+  
+</project>
+
+
+<project name="processlp">
+  <fcldir>&fcldir;</fcldir>
+  <!-- Project size -->
+  <numevents>100000</numevents>
+
+  <!-- Operating System -->
+  <!--os>SL6</os-->
+  <!-- Batch resources -->
+  <resource>&resourcem;</resource>
+  
+  <!-- Larsoft information  -->
+  <larsoft>
+    <tag>&relreco;</tag>
+    <qual>e9:prof</qual>
+    <local>/uboone/app/users/mibass/ubdev_mucs2/lps_larlite.tar</local>
+  </larsoft>
+  
+  <numjobs>&numjobs;</numjobs>
+  <maxfilesperjob>1</maxfilesperjob>  
+  `
+  <stage name="MuCSMPTAL">
+    <fcl>MuCSMPTAL_&group;.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/MuCSMPTAL/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/MuCSMPTAL/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/MuCSMPTAL/&name;</workdir>
+  </stage>
+</project>
+
+
+
+
+<project name="RecoToMC">
+  <fcldir>&fcldir;</fcldir>
+  <!-- Project size -->
+  <numevents>100000</numevents>
+
+  <!-- Operating System -->
+  <!--os>SL6</os-->
+  <!-- Batch resources -->
+  <resource>&resourcem;</resource>
+  
+  <!-- Larsoft information  -->
+  <larsoft>
+    <tag>&relmctoreco;</tag>
+    <qual>e9:prof</qual>
+    <!--local>/uboone/app/users/mibass/ubdev_mucs2/lps.tar</local-->
+  </larsoft>
+  
+  <numjobs>&numjobs;</numjobs>
+  <maxfilesperjob>1</maxfilesperjob>  
+  `
+  <stage name="MuCSRecoToMC500MeV">
+    <fcl>MuCSRecoToMC_500MeV.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relmctoreco;/MuCSRecoToMC500MeV/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/log/&tag;/&relmctoreco;/MuCSRecoToMC500MeV/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relmctoreco;/MuCSRecoToMC500MeV/&name;</workdir>
+  </stage>
+  
+</project>
+
+
+
+
+<project name="RecoToMCSim">
+  <fcldir>&fcldir;</fcldir>
+  <!-- Project size -->
+  <numevents>100000</numevents>
+
+  <!-- Operating System -->
+  <!--os>SL6</os-->
+  <!-- Batch resources -->
+  <resource>&resourcem;</resource>
+  
+  <!-- Larsoft information  -->
+  <larsoft>
+    <tag>&relsim;</tag>
+    <qual>e9:prof</qual>
+  </larsoft>
+  
+  <numjobs>&numjobs;</numjobs>
+  <maxfilesperjob>1</maxfilesperjob>  
+  `
+  <stage name="mcg4500MeV">
+    <fcl>standard_g4_uboone_noInherit.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/mcg4500MeV/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/log/&tag;/&relsim;/mcg4500MeV/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relsim;/mcg4500MeV/&name;</workdir>    
+  </stage>
+  
+  <stage name="mcdetsim500MeV">
+    <fcl>standard_detsim_uboone_noInherit.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/mcdetsim500MeV/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/log/&tag;/&relsim;/mcdetsim500MeV/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relsim;/mcdetsim500MeV/&name;</workdir>    
+  </stage>
+
+</project>
+
+<project name="RecoToMCReco">
+  <fcldir>&fcldir;</fcldir>
+  <!-- Project size -->
+  <numevents>100000</numevents>
+
+  <!-- Operating System -->
+  <!--os>SL6</os-->
+  <!-- Batch resources -->
+  <resource>&resourcem;</resource>
+  
+  <!-- Larsoft information  -->
+  <larsoft>
+    <tag>&relreco;</tag>
+    <qual>e9:prof</qual>
+  </larsoft>
+  
+  <numjobs>&numjobs;</numjobs>
+  <maxfilesperjob>1</maxfilesperjob>  
+  `
+  <stage name="mcreco1500MeV">
+    <fcl>reco_uboone_mcc7_driver_stage1.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/mcreco1500MeV/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/log/&tag;/&relreco;/mcreco1500MeV/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relreco;/mcreco1500MeV/&name;</workdir>    
+  </stage>  
+  
+  <stage name="mcreco2500MeV">
+    <fcl>reco_uboone_mcc7_driver_stage2.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/mcreco2500MeV/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/log/&tag;/&relreco;/mcreco2500MeV/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relreco;/mcreco2500MeV/&name;</workdir>    
+  </stage>  
+
+  <stage name="mcMuCSTA500MeV">
+    <fcl>MuCSTA.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/mcana500MeV/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/log/&tag;/&relreco;/mcana500MeV/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relreco;/mcana500MeV/&name;</workdir>    
+  </stage>  
+</project>
+
+</job>

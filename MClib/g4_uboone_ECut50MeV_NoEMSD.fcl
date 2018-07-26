@@ -1,0 +1,4 @@
+#include "standard_g4_uboone.fcl"
+
+services.user.LArG4Parameters.KeepEMShowerDaughters: false
+services.user.LArG4Parameters.ParticleKineticECut: 0.05

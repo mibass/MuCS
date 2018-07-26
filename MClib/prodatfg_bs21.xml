@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+
+<!-- Production Project -->
+
+<!DOCTYPE project [
+<!ENTITY relsim "v04_08_01">
+<!ENTITY relreco "v04_08_01">
+<!ENTITY file_type "mc">
+<!ENTITY run_type "physics">
+<!ENTITY name "MCSmuons_bs21">
+<!ENTITY tag "MCS">
+]>
+
+<job>
+
+<project name="&name;">
+
+  <!-- Project size -->
+  <numevents>9900</numevents>
+  <!-- Operating System -->
+  <os>SL6</os>
+  <!-- Batch resources -->
+  <resource>DEDICATED,OPPORTUNISTIC</resource>
+
+  <fcldir>/uboone/app/users/mibass/cosmics/MuCS/MClib/</fcldir> 
+  
+  <!-- Larsoft information -->
+  <larsoft>
+    <tag>&relsim;</tag>
+    <qual>e7:prof</qual>
+    <local>/uboone/app/users/mibass/ubdev/localProducts_larsoft_v04_08_01_e7_prof/</local>
+  </larsoft>
+
+  <!-- Project stages -->
+
+  <stage name="gen">
+    <fcl>prodtext_test.fcl</fcl>
+    <inputmode>textfile</inputmode>
+    <inputlist>/uboone/app/users/mibass/cosmics/MuCS/MClib/inputlist_bs21.txt</inputlist>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/gen/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/&tag;/&relsim;/gen/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relsim;/gen/&name;</workdir>
+    <output>MCSmuons_${PROCESS}_%tc_gen.root</output>
+    <numjobs>99</numjobs>
+  </stage>
+
+  <stage name="g4">
+    <!-- fcl>standard_g4_uboone.fcl</fcl-->
+    <fcl>g4_uboone_ECut50MeV_NoEMSD.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/g4/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/&tag;/&relsim;/g4/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relsim;/g4/&name;</workdir>
+    <numjobs>99</numjobs>
+  </stage>
+  
+  <stage name="MCSMuons">
+    <fcl>MCSMuons.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relsim;/MCMuons/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/&tag;/&relsim;/MCSMuons/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relsim;/MCSMuons/&name;</workdir>
+    <numjobs>99</numjobs>
+  </stage>
+
+</project>
+
+<project name="&name;_reco">
+
+  <!-- Project size -->
+  <numevents>2000</numevents>
+
+  <!-- Operating System -->
+  <os>SL6</os>
+
+  <!-- Batch resources -->
+  <resource>DEDICATED,OPPORTUNISTIC</resource>
+
+  <!-- Larsoft information -->
+  <larsoft>
+    <tag>&relreco;</tag>
+    <qual>e7:prof</qual>
+    <!--local>/uboone/app/users/mibass/larsoft_dev/localProducts_larsoft_v04_06_02_e7_prof</local-->
+  </larsoft>
+
+  <!-- Project stages -->
+
+  <stage name="reco1">
+    <fcl>reco_uboone_stage_1.fcl</fcl>
+    <inputlist>/uboone/data/users/mibass/&tag;/&relsim;/detsim/&name;/files.list</inputlist>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/reco1/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/&tag;/&relreco;/reco1/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relreco;/reco1/&name;</workdir>
+    <numjobs>1000</numjobs>
+  </stage>
+
+  <stage name="reco2">
+    <fcl>reco_uboone_stage_2.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/reco2/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/&tag;/&relreco;/reco2/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relreco;/reco2/&name;</workdir>
+    <numjobs>1000</numjobs>
+  </stage>
+
+  <stage name="mergeana">
+    <fcl>standard_ana_uboone_hist.fcl</fcl>
+    <inputlist>/uboone/data/users/mibass/mcc6.0/v04_06_01/g4/&name;/files.list</inputlist>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/mergeana/&name;</outdir>
+    <logdir>/uboone/data/users/mibass/&tag;/&relreco;/mergeana/&name;</logdir>
+    <workdir>/uboone/data/users/mibass/work/&tag;/&relreco;/mergeana/&name;</workdir>
+    <numjobs>1000</numjobs>
+<!--    <targetsize>8000000000</targetsize> -->
+  </stage>
+
+</project>
+
+</job>

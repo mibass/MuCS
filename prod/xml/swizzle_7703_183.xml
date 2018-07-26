@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+
+<!-- Production Project -->
+
+<!DOCTYPE project [
+<!ENTITY relswiz "v04_26_04_09">
+<!ENTITY relreco "v05_08_00">
+<!ENTITY relmctoreco "v05_09_01">
+<!ENTITY relsim "v04_36_00_03">
+<!ENTITY file_type "mc">
+<!ENTITY run_type "physics">
+<!ENTITY name "MuCSRun7703_Group183">
+<!ENTITY tag "MuCS">
+<!ENTITY group "183">
+<!ENTITY numjobs "573">
+<!ENTITY bs "35">
+<!ENTITY runnumber "7703">
+<!ENTITY fcldir "/uboone/app/users/mibass/cosmics/MuCS/prod/prodfcls/">
+<!ENTITY resourcem "DEDICATED,OPPORTUNISTIC">
+]>
+
+<job>
+
+<project name="swizzle">
+  <fcldir>&fcldir;</fcldir>
+  <!-- Project size -->
+  <numevents>100000</numevents>
+
+  <!-- Operating System -->
+  <!--os>SL6</os-->
+  <!-- Batch resources -->
+  <resource>&resourcem;</resource>
+  
+  <!-- Larsoft information  -->
+  <larsoft>
+    <tag>&relswiz;</tag>
+    <qual>e7:prof</qual>
+  </larsoft>
+  <filetype>data</filetype>
+  <runtype>physics</runtype>
+    
+  <!-- Project stages -->
+  <stage name="swizzle">
+    <fcl>swizzle_with_three_filters.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relswiz;/swizzle/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relswiz;/swizzle/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relswiz;/swizzle/&name;</workdir>
+    <!--output>swizzle_${PROCESS}_%tc.root</output-->
+    <inputdef>mibass_&name;_ubdaq</inputdef>
+    <numjobs>&numjobs;</numjobs>
+    <maxfilesperjob>1</maxfilesperjob>
+    <jobsub>-f /pnfs/uboone/persistent/uboonedb_passwd</jobsub>
+    <datatier>raw</datatier>
+    <defname>&name;_&tag;_swizzle</defname>
+  </stage>
+
+
+  
+</project>
+
+<project name="MuCSMergeProcess">
+  <fcldir>&fcldir;</fcldir>
+  <!-- Project size -->
+  <numevents>100000</numevents>
+
+  <!-- Operating System -->
+  <!--os>SL6</os-->
+  <!-- Batch resources -->
+  <resource>&resourcem;</resource>
+  
+  <!-- Larsoft information  -->
+  <larsoft>
+    <tag>&relreco;</tag>
+    <qual>e9:prof</qual>
+  </larsoft>
+  
+  <numjobs>&numjobs;</numjobs>
+  <maxfilesperjob>1</maxfilesperjob>  
+  <filetype>data</filetype>
+  <runtype>physics</runtype>
+  <runnumber>&runnumber;</runnumber>
+  
+  <stage name="MuCSDT">
+    <fcl>MuCSDT_&group;.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/MuCSDT/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/MuCSDT/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/MuCSDT/&name;</workdir>
+  </stage>
+  
+  <stage name="MuCSMerge">
+    <fcl>MuCSMerge_&group;.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/MuCSMerge/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/MuCSMerge/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/MuCSMerge/&name;</workdir>
+    <jobsub>-f /pnfs/uboone/persistent/users/mibass/MuCS/sqMaker/MClib_bs&bs;.sqlite</jobsub>
+    <defname>&name;_MuCSMerged</defname>
+    <datatier>raw</datatier>
+  </stage>
+  
+  <stage name="reco1">
+    <fcl>reco_uboone_data_Feb2016_driver_stage1_SatCorr_epoch3.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/reco1/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/reco1/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/reco1/&name;</workdir>
+    <!--memory>4000</memory-->
+  </stage>
+
+  <stage name="reco2">
+    <fcl>reco_uboone_data_Feb2016_driver_stage2_SatCorr_epoch3.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/reco2/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/reco2/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/reco2/&name;</workdir>
+    <memory>4000</memory>
+    <jobsub>--expected-lifetime=2d</jobsub>
+  </stage>
+  
+  <stage name="MuCSPTA">
+    <fcl>MuCSPTA_bs&bs;.fcl</fcl>
+    <outdir>/pnfs/uboone/scratch/users/mibass/&tag;/&relreco;/MuCSPTA/&name;</outdir>
+    <logdir>/pnfs/uboone/scratch/users/mibass/log/&tag;/&relreco;/MuCSPTA/&name;</logdir>
+    <workdir>/pnfs/uboone/scratch/users/mibass/work/&tag;/&relreco;/MuCSPTA/&name;</workdir>
+    <defname>&name;_MuCSTaggedReco</defname>
+    <datatier>reconstructed</datatier>
+    <anadefname>&name;MuCSTaggedReco_ana</anadefname>
+    <anadatatier>root-tuple</anadatatier>
+  </stage>
+  
+</project>
+
+
+</job>
